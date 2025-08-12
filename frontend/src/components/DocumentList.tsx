@@ -1,15 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { 
   FileText, 
   Trash2, 
   Eye, 
   Search, 
-  Filter, 
-  Download,
   CheckCircle,
   Clock,
-  AlertCircle,
-  FileType
+  AlertCircle
 } from 'lucide-react';
 import { documentApi } from '../services/api';
 import { Document, DocumentListResponse } from '../types';
@@ -33,7 +30,7 @@ const DocumentList: React.FC<DocumentListProps> = ({
   const [totalPages, setTotalPages] = useState(1);
   const [totalDocuments, setTotalDocuments] = useState(0);
 
-  const loadDocuments = async () => {
+  const loadDocuments = useCallback(async () => {
     try {
       setLoading(true);
       const params: any = {
@@ -53,11 +50,11 @@ const DocumentList: React.FC<DocumentListProps> = ({
     } finally {
       setLoading(false);
     }
-  };
+  }, [currentPage, filterType, filterStatus]);
 
   useEffect(() => {
     loadDocuments();
-  }, [currentPage, filterType, filterStatus, refreshTrigger]);
+  }, [loadDocuments, refreshTrigger]);
 
   const handleDelete = async (documentId: number) => {
     if (!window.confirm('Are you sure you want to delete this document?')) {

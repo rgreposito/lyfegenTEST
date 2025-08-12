@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Send, MessageCircle, Bot, User, FileText, Sparkles } from 'lucide-react';
 import { chatApi } from '../services/api';
 import { ChatMessage, ChatResponse, Source } from '../types';
@@ -28,15 +28,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
     scrollToBottom();
   }, [messages]);
 
-  useEffect(() => {
-    if (initialSessionId) {
-      loadSession(initialSessionId);
-    } else {
-      createNewSession();
-    }
-  }, [initialSessionId]);
-
-  const createNewSession = async () => {
+  const createNewSession = useCallback(async () => {
     try {
       const session = await chatApi.createSession('New Chat');
       setSessionId(session.session_id);
@@ -47,16 +39,24 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
     } catch (error: any) {
       toast.error('Failed to create chat session');
     }
-  };
+  }, [onSessionCreated]);
 
-  const loadSession = async (id: string) => {
+  const loadSession = useCallback(async (id: string) => {
     try {
       const session = await chatApi.getSession(id);
       setMessages(session.messages);
     } catch (error: any) {
       toast.error('Failed to load chat session');
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    if (initialSessionId) {
+      loadSession(initialSessionId);
+    } else {
+      createNewSession();
+    }
+  }, [initialSessionId, createNewSession, loadSession]);
 
   const sendMessage = async () => {
     if (!inputMessage.trim() || !sessionId || isLoading) return;

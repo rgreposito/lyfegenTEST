@@ -69,12 +69,6 @@ const DocumentUpload: React.FC<DocumentUploadProps> = ({
     multiple: true,
   });
 
-  const removeFile = (file: File) => {
-    const newFiles = acceptedFiles.filter(f => f !== file);
-    // Note: This doesn't actually remove from dropzone, just from our tracking
-    // In a real implementation, you'd need to manage this state differently
-  };
-
   const formatFileSize = (bytes: number) => {
     if (bytes === 0) return '0 Bytes';
     const k = 1024;
@@ -166,13 +160,6 @@ const DocumentUpload: React.FC<DocumentUploadProps> = ({
                     <p className="text-xs text-gray-500">{formatFileSize(file.size)}</p>
                   </div>
                 </div>
-                
-                <button
-                  onClick={() => removeFile(file)}
-                  className="text-gray-400 hover:text-red-500 transition-colors"
-                >
-                  <X className="h-4 w-4" />
-                </button>
               </div>
             ))}
           </div>
@@ -183,7 +170,7 @@ const DocumentUpload: React.FC<DocumentUploadProps> = ({
       {acceptedFiles.length > 0 && !uploading && (
         <div className="mt-6">
           <button
-            onClick={() => onDrop(acceptedFiles)}
+            onClick={() => onDrop(acceptedFiles as File[])}
             className="w-full bg-primary-600 text-white py-3 px-4 rounded-lg font-medium hover:bg-primary-700 transition-colors"
           >
             Upload {acceptedFiles.length} file{acceptedFiles.length > 1 ? 's' : ''}

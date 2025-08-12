@@ -8,7 +8,6 @@ import {
   Search,
   Menu,
   X,
-  Settings,
   Home
 } from 'lucide-react';
 import DocumentUpload from './components/DocumentUpload';
