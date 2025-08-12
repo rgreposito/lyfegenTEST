@@ -31,7 +31,7 @@ class Document(Base):
     document_type = Column(String)  # contract, report, invoice, etc.
     status = Column(String, default="processing")  # processing, completed, failed
     extracted_data = Column(JSON)  # Structured data extracted from document
-    metadata = Column(JSON)  # Additional document metadata
+    document_metadata = Column(JSON)  # Additional document metadata (renamed from metadata)
     vector_id = Column(String)  # ID in vector database
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())

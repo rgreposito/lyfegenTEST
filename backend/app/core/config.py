@@ -9,11 +9,11 @@ class Settings(BaseSettings):
     app_version: str = "1.0.0"
     debug: bool = False
     
-    # Database settings
-    database_url: str = "postgresql://user:password@localhost/documents_db"
+    # Database settings - Using SQLite for local development
+    database_url: str = "sqlite:///./documents.db"
     
     # OpenAI settings
-    openai_api_key: str
+    openai_api_key: str = "your-openai-api-key-here"  # Default for development
     
     # Security settings
     secret_key: str = "your-secret-key-here"

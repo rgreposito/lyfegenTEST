@@ -54,7 +54,7 @@ async def process_document_background(file_path: str, document_id: int, db: Sess
         document.status = "completed"
         document.document_type = result["document_type"]
         document.extracted_data = result["extracted_data"]
-        document.metadata = result["metadata"]
+        document.document_metadata = result["metadata"]
         document.vector_id = result["vector_id"]
         
         db.commit()
