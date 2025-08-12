@@ -16,7 +16,7 @@ class DocumentUpdate(BaseModel):
     document_type: Optional[str] = None
     status: Optional[str] = None
     extracted_data: Optional[Dict[str, Any]] = None
-    metadata: Optional[Dict[str, Any]] = None
+    document_metadata: Optional[Dict[str, Any]] = None
 
 
 class DocumentResponse(DocumentBase):
@@ -26,7 +26,7 @@ class DocumentResponse(DocumentBase):
     file_type: str
     status: str
     extracted_data: Optional[Dict[str, Any]] = None
-    metadata: Optional[Dict[str, Any]] = None
+    document_metadata: Optional[Dict[str, Any]] = None
     vector_id: Optional[str] = None
     created_at: datetime
     updated_at: Optional[datetime] = None
